@@ -1,0 +1,531 @@
+[
+  {
+    "campaigns": [
+      {
+        "autoCloseOption": "NO_AUTO_CLOSE",
+        "bccEmail": "prosper@ea.liftscience.io",
+        "campaignVariables": {
+          "BCT_TEST_DATE": "20190821",
+          "CREATIVE_DISPLAY": "<#itlscript>${(BCT_CREATIVE_FLAG % 5) + 1}</#itlscript>",
+          "CREATIVE_TESTING_ARRAY": "<#itlscript>OFF</#itlscript>",
+          "CUSTOM_DATA1": "<#itlscript>1</#itlscript>",
+          "CUSTOM_DATA10": "<#itlscript>${BCT_STO_FLAG}</#itlscript>",
+          "CUSTOM_DATA11": "<#itlscript><#if NTB = '1'>NTB<#else>GeneralBCT</#if></#itlscript>",
+          "CUSTOM_DATA2": "<#itlscript>Primary</#itlscript>",
+          "CUSTOM_DATA8": "<#itlscript>${CREATIVE_DISPLAY}</#itlscript>",
+          "SL": "<#itlscript><#join>\n    <#compress>\n    <#if CREATIVE_DISPLAY?number lt 10>\n\t\t<#assign CREATIVE_TEST_MATCH = '0' + CREATIVE_DISPLAY>\n\t<#else>\n\t\t<#assign CREATIVE_TEST_MATCH = CREATIVE_DISPLAY>\n</#if>\n<#if launch.type = 'proof' || launch.type = 'preview'>\n\t<#assign CURRENT_DATE = BCT_TEST_DATE?datetime(\"yyyyMMdd\")>\n\t\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t\t<#if CODE lte 49>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A_test'>\n\t\t\t<#else>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B_test'>\n\t\t\t</#if>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY>\n\t\t</#if>\n<#else>\n\t<#assign CURRENT_DATE = .now>\n\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t<#if CODE lte 49>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A'>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B'>\n\t\t</#if>\n\t</#if>\n</#if>\n\n<#assign seasonal_sl_display = 'F'>\n\t<#data BCT_SEASONAL_TABLE as bct_season>\n\t\t\t<#filter SEASON_FLAG = 'T'>\n            \t\t\t<#fields CONTENT_DISPLAY START_DATE END_DATE>\n\t        \t\t  <#if bct_season.START_DATE lte CURRENT_DATE && bct_season.END_DATE gte CURRENT_DATE>\n                  \t\t\t<#assign seasonal_sl_display = 'T'>\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<#include 'cms://contentlibrary/automations/bct/' + bct_season.CONTENT_DISPLAY + '_primary.txt'>\t\t\t\t\t\n        \t \t\t </#if>\n\t\t</#data>\n<#if seasonal_sl_display = 'F'>\n\t<#include 'cms://contentlibrary/automations/bct/week_' + CREATIVE_DISPLAY + '_primary.txt'>\n</#if>    \n\t</#compress>\n</#join></#itlscript>",
+          "SL_TESTING_ARRAY": "OFF"
+        },
+        "enableExternalTracking": false,
+        "enableLinkTracking": true,
+        "externalCampaignCode": "2019_BCT_Automation_Primary",
+        "filterPaths": [
+          "BCT_Automation/BCT_Automation_IvanOnly_Filter"
+        ],
+        "folderName": "BCT_Automation",
+        "fromEmail": "prosper@mail.prosper.com",
+        "fromName": "Prosper",
+        "htmlMessagePath": "/contentlibrary/automations/bct/BCT_Automation_Shell.htm",
+        "id": 8536982,
+        "linkTablePath": "BCT_Automation/BCT_AUTOMATION_LT",
+        "links": [
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Primary",
+            "method": "GET",
+            "rel": "self"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Primary",
+            "method": "PUT",
+            "rel": "update"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns",
+            "method": "POST",
+            "rel": "create"
+          }
+        ],
+        "listName": "CONTACTS_LIST",
+        "locale": "en",
+        "marketingProgram": "Broadcast",
+        "marketingStrategy": "Borrower",
+        "name": "2019_BCT_Automation_Primary",
+        "proofListPath": "!Seed Groups/Internal Email",
+        "purpose": "PROMOTIONAL",
+        "replyToEmail": "noreply@mail.prosper.com",
+        "seedListPath": "!Seed Groups/Internal Email",
+        "sendTextIfHTMLUnknown": false,
+        "subject": "<#include \"cms://messagelibrary/email/8536982/DynamicSubjectLine.itl.txt\">",
+        "supplementaryCampaignDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementaryLookupDataSourcePaths": [
+          "BCT_Automation/BCT_LoanMapping_Supp",
+          "BCT_Automation/BCT_SEASONAL_TABLE"
+        ],
+        "supplementaryProofDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementarySeedDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "trackConversions": true,
+        "trackHTMLOpens": true,
+        "type": "EMAIL",
+        "unsubscribeOption": "OPTOUT_SINGLE_CLICK",
+        "useUTF8": true
+      },
+      {
+        "autoCloseOption": "NO_AUTO_CLOSE",
+        "bccEmail": "prosper@ea.liftscience.io",
+        "campaignVariables": {
+          "BCT_TEST_DATE": "20190821",
+          "CREATIVE_DISPLAY": "<#itlscript>${(BCT_CREATIVE_FLAG % 5) + 1}</#itlscript>",
+          "CREATIVE_TESTING_ARRAY": "OFF",
+          "CUSTOM_DATA1": "<#itlscript>2</#itlscript>",
+          "CUSTOM_DATA10": "<#itlscript>${BCT_STO_FLAG}</#itlscript>",
+          "CUSTOM_DATA11": "<#itlscript><#if NTB = '1'>NTB<#else>GeneralBCT</#if></#itlscript>",
+          "CUSTOM_DATA2": "<#itlscript>Remail</#itlscript>",
+          "CUSTOM_DATA8": "<#itlscript>${CREATIVE_DISPLAY}</#itlscript>",
+          "SL": "<#itlscript><#join>\n    <#compress>\n    <#if CREATIVE_DISPLAY?number lt 10>\n\t\t<#assign CREATIVE_TEST_MATCH = '0' + CREATIVE_DISPLAY>\n\t<#else>\n\t\t<#assign CREATIVE_TEST_MATCH = CREATIVE_DISPLAY>\n</#if>\n<#if launch.type = 'proof' || launch.type = 'preview'>\n\t<#assign CURRENT_DATE = BCT_TEST_DATE?datetime(\"yyyyMMdd\")>\n\t\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t\t<#if CODE lte 49>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A_test'>\n\t\t\t<#else>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B_test'>\n\t\t\t</#if>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY>\n\t\t</#if>\n<#else>\n\t<#assign CURRENT_DATE = .now>\n\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t<#if CODE lte 49>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A'>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B'>\n\t\t</#if>\n\t</#if>\n</#if>\n\n<#assign seasonal_sl_display = 'F'>\n\t<#data BCT_SEASONAL_TABLE as bct_season>\n\t\t\t<#filter SEASON_FLAG = 'T'>\n            \t\t\t<#fields CONTENT_DISPLAY START_DATE END_DATE>\n\t        \t\t  <#if bct_season.START_DATE lte CURRENT_DATE && bct_season.END_DATE gte CURRENT_DATE>\n                  \t\t\t<#assign seasonal_sl_display = 'T'>\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<#include 'cms://contentlibrary/automations/bct/' + bct_season.CONTENT_DISPLAY + '_remail.txt'>\t\t\t\t\t\n        \t \t\t </#if>\n\t\t</#data>\n<#if seasonal_sl_display = 'F'>\n\t<#include 'cms://contentlibrary/automations/bct/week_' + CREATIVE_DISPLAY + '_remail.txt'>\n</#if>    \n\t</#compress>\n</#join></#itlscript>",
+          "SL_TESTING_ARRAY": "OFF"
+        },
+        "enableExternalTracking": false,
+        "enableLinkTracking": true,
+        "externalCampaignCode": "2019_BCT_Automation_Remail",
+        "filterPaths": [
+          "BCT_Automation/BCT_Automation_IvanOnly_Filter"
+        ],
+        "folderName": "BCT_Automation",
+        "fromEmail": "prosper@mail.prosper.com",
+        "fromName": "Prosper",
+        "htmlMessagePath": "/contentlibrary/automations/bct/BCT_Automation_Shell.htm",
+        "id": 8635502,
+        "linkTablePath": "BCT_Automation/BCT_AUTOMATION_LT",
+        "links": [
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Remail",
+            "method": "GET",
+            "rel": "self"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Remail",
+            "method": "PUT",
+            "rel": "update"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns",
+            "method": "POST",
+            "rel": "create"
+          }
+        ],
+        "listName": "CONTACTS_LIST",
+        "locale": "en",
+        "marketingProgram": "Broadcast",
+        "marketingStrategy": "Borrower",
+        "name": "2019_BCT_Automation_Remail",
+        "proofListPath": "!Seed Groups/Internal Email",
+        "purpose": "PROMOTIONAL",
+        "replyToEmail": "noreply@mail.prosper.com",
+        "seedListPath": "!Seed Groups/Internal Email",
+        "sendTextIfHTMLUnknown": false,
+        "subject": "<#include \"cms://messagelibrary/email/8635502/DynamicSubjectLine.itl.txt\">",
+        "supplementaryCampaignDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementaryLookupDataSourcePaths": [
+          "BCT_Automation/BCT_LoanMapping_Supp",
+          "BCT_Automation/BCT_SEASONAL_TABLE"
+        ],
+        "supplementaryProofDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementarySeedDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "trackConversions": true,
+        "trackHTMLOpens": true,
+        "type": "EMAIL",
+        "unsubscribeOption": "OPTOUT_SINGLE_CLICK",
+        "useUTF8": true
+      },
+      {
+        "autoCloseOption": "NO_AUTO_CLOSE",
+        "bccEmail": "prosper@ea.liftscience.io",
+        "campaignVariables": {
+          "BCT_TEST_DATE": "20190821",
+          "CREATIVE_DISPLAY": "<#itlscript>${(BCT_CREATIVE_FLAG % 5) + 1}</#itlscript>",
+          "CREATIVE_TESTING_ARRAY": "OFF",
+          "CUSTOM_DATA1": "<#itlscript>3</#itlscript>",
+          "CUSTOM_DATA10": "<#itlscript>${BCT_STO_FLAG}</#itlscript>",
+          "CUSTOM_DATA11": "<#itlscript><#if NTB = '1'>NTB<#else>GeneralBCT</#if></#itlscript>",
+          "CUSTOM_DATA2": "<#itlscript>Trimail</#itlscript>",
+          "CUSTOM_DATA8": "<#itlscript>${CREATIVE_DISPLAY}</#itlscript>",
+          "SL": "<#itlscript><#join>\n    <#compress>\n    <#if CREATIVE_DISPLAY?number lt 10>\n\t\t<#assign CREATIVE_TEST_MATCH = '0' + CREATIVE_DISPLAY>\n\t<#else>\n\t\t<#assign CREATIVE_TEST_MATCH =  CREATIVE_DISPLAY>\n</#if>\n<#if launch.type = 'proof' || launch.type = 'preview'>\n\t<#assign CURRENT_DATE = BCT_TEST_DATE?datetime(\"yyyyMMdd\")>\n\t\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t\t<#if CODE lte 49>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A_test'>\n\t\t\t<#else>\n\t\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B_test'>\n\t\t\t</#if>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY>\n\t\t</#if>\n<#else>\n\t<#assign CURRENT_DATE = .now>\n\t<#if CREATIVE_TESTING_ARRAY?contains(CREATIVE_TEST_MATCH)>\n\t\t<#if CODE lte 49>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_A'>\n\t\t<#else>\n\t\t\t<#assign CREATIVE_DISPLAY = CREATIVE_DISPLAY + '_B'>\n\t\t</#if>\n\t</#if>\n</#if>\n\n<#assign seasonal_sl_display = 'F'>\n\t<#data BCT_SEASONAL_TABLE as bct_season>\n\t\t\t<#filter SEASON_FLAG = 'T'>\n            \t\t\t<#fields CONTENT_DISPLAY START_DATE END_DATE>\n\t        \t\t  <#if bct_season.START_DATE lte CURRENT_DATE && bct_season.END_DATE gte CURRENT_DATE>\n                  \t\t\t<#assign seasonal_sl_display = 'T'>\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<#include 'cms://contentlibrary/automations/bct/' + bct_season.CONTENT_DISPLAY + '_trimail.txt'>\t\t\t\t\t\n        \t \t\t </#if>\n\t\t</#data>\n<#if seasonal_sl_display = 'F'>\n\t<#include 'cms://contentlibrary/automations/bct/week_' + CREATIVE_DISPLAY + '_trimail.txt'>\n</#if>    \n\t</#compress>\n</#join></#itlscript>",
+          "SL_TESTING_ARRAY": "OFF"
+        },
+        "enableExternalTracking": false,
+        "enableLinkTracking": true,
+        "externalCampaignCode": "2019_BCT_Automation_Trimail",
+        "filterPaths": [
+          "BCT_Automation/BCT_Automation_IvanOnly_Filter"
+        ],
+        "folderName": "BCT_Automation",
+        "fromEmail": "prosper@mail.prosper.com",
+        "fromName": "Prosper",
+        "htmlMessagePath": "/contentlibrary/automations/bct/BCT_Automation_Shell.htm",
+        "id": 8635622,
+        "linkTablePath": "BCT_Automation/BCT_AUTOMATION_LT",
+        "links": [
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Trimail",
+            "method": "GET",
+            "rel": "self"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns/2019_BCT_Automation_Trimail",
+            "method": "PUT",
+            "rel": "update"
+          },
+          {
+            "href": "/rest/api/v1.3/campaigns",
+            "method": "POST",
+            "rel": "create"
+          }
+        ],
+        "listName": "CONTACTS_LIST",
+        "locale": "en",
+        "marketingProgram": "Broadcast",
+        "marketingStrategy": "Borrower",
+        "name": "2019_BCT_Automation_Trimail",
+        "proofListPath": "!Seed Groups/Internal Email",
+        "purpose": "PROMOTIONAL",
+        "replyToEmail": "noreply@mail.prosper.com",
+        "seedListPath": "!Seed Groups/Internal Email",
+        "sendTextIfHTMLUnknown": false,
+        "subject": "<#include \"cms://messagelibrary/email/8635622/DynamicSubjectLine.itl.txt\">",
+        "supplementaryCampaignDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementaryLookupDataSourcePaths": [
+          "BCT_Automation/BCT_LoanMapping_Supp",
+          "BCT_Automation/BCT_SEASONAL_TABLE"
+        ],
+        "supplementaryProofDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "supplementarySeedDataSourcePaths": [
+          "!MasterData/Broadcast_PET",
+          "BCT_Automation/BCT_Automation_PET",
+          "!MasterData/BORROWER_ENGAGEMENT_MOST_RECENT"
+        ],
+        "trackConversions": true,
+        "trackHTMLOpens": true,
+        "type": "EMAIL",
+        "unsubscribeOption": "OPTOUT_SINGLE_CLICK",
+        "useUTF8": true
+      }
+    ]
+  },
+  {
+    "PETs": [
+      {
+        "fields": [
+          {
+            "fieldName": "RIID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "BCT_CREATIVE_FLAG",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "BCT_STO_FLAG",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "BCT_WINBACK_FLAG",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "BCT_FATIGUE_FLAG",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "CREATED_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "LAST_MOD_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "CREATED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "MODIFIED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_BULK_LOAD_ID_",
+            "fieldType": "INTEGER"
+          }
+        ],
+        "links": [
+          {
+            "href": "/rest/api/v1.3/lists/CONTACTS_LIST/listExtensions",
+            "method": "POST",
+            "rel": "createProfileExtensionTable"
+          }
+        ],
+        "profileExtension": {
+          "folderName": "BCT_Automation",
+          "objectName": "BCT_Automation_PET"
+        }
+      },
+      {
+        "fields": [
+          {
+            "fieldName": "RIID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "ROLE_STATUS",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "DEFAULTED_LOAN_IND",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "INELIGIBLE_STATE_IND",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "CREDIT_SCORE_TOO_LOW_IND",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "NOT_YET_ELIGIBLE_IND",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "ENGAGEMENT_LEVEL",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "LAST_LOGIN_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_CREDIT_PULL_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_CREDIT_DECLINE_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_CREDIT_APPROVAL_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_LISTING_ACTIVATED_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_LOAN_ORIGINATED_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "CREATED_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "LAST_MOD_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "CREATED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "MODIFIED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "RECORDDATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_BULK_LOAD_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "PARTNER_ID",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "PARTNER_NAME",
+            "fieldType": "STR100"
+          },
+          {
+            "fieldName": "PARTNER_REFERRAL_DATE",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LISTCATEGORYID",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "CREDIT_GUARD_ROLE_ID",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "MKT_LTA_SOURCE_NAME",
+            "fieldType": "STR100"
+          },
+          {
+            "fieldName": "RISK_APPLICATION_TS",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "RENTER_FLAG",
+            "fieldType": "CHAR"
+          },
+          {
+            "fieldName": "FICO",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "PMI",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "LH_SEG",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "STATE_OF_RESIDENCE",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "LASTORIGINATIONDATE4BUS",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "TOTALLOANCOUNT",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "AUTO_PAY_OFF_IND",
+            "fieldType": "STR25"
+          },
+          {
+            "fieldName": "DUEDATECHANGEOFFER",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "REQUESTED_AMOUNT",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "INTEREST_RATE_3YEAR",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "APR_3YEAR",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "MONTHLY_PAYMENT_3YEAR",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "INTEREST_RATE_5YEAR",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "APR_5YEAR",
+            "fieldType": "NUMBER"
+          },
+          {
+            "fieldName": "MONTHLY_PAYMENT_5YEAR",
+            "fieldType": "NUMBER"
+          }
+        ],
+        "links": [
+          {
+            "href": "/rest/api/v1.3/lists/CONTACTS_LIST/listExtensions",
+            "method": "POST",
+            "rel": "createProfileExtensionTable"
+          }
+        ],
+        "profileExtension": {
+          "folderName": "!MasterData",
+          "objectName": "BORROWER_ENGAGEMENT_MOST_RECENT"
+        }
+      },
+      {
+        "fields": [
+          {
+            "fieldName": "RIID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "NTB",
+            "fieldType": "CHAR"
+          },
+          {
+            "fieldName": "CREATED_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "LAST_MOD_BY_LOAD_JOB_ID_",
+            "fieldType": "INTEGER"
+          },
+          {
+            "fieldName": "CREATED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "MODIFIED_DATE_",
+            "fieldType": "TIMESTAMP"
+          },
+          {
+            "fieldName": "LAST_BULK_LOAD_ID_",
+            "fieldType": "INTEGER"
+          }
+        ],
+        "links": [
+          {
+            "href": "/rest/api/v1.3/lists/CONTACTS_LIST/listExtensions",
+            "method": "POST",
+            "rel": "createProfileExtensionTable"
+          }
+        ],
+        "profileExtension": {
+          "folderName": "!MasterData",
+          "objectName": "Broadcast_PET"
+        }
+      }
+    ]
+  }
+]
